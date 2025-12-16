@@ -6,8 +6,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Optional,
-    Union,
 )
 from uuid import NAMESPACE_OID, uuid5
 
@@ -31,11 +29,11 @@ class TurbopufferHandshake(BaseHandshake):
 
     def __init__(
         self,
-        namespace: Optional[Any] = None,  # Will be tpuf.Namespace at runtime
-        namespace_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        api_key: Optional[str] = None,
-        region: Optional[str] = "gcp-us-central1",
+        namespace: Any | None = None,  # Will be tpuf.Namespace at runtime
+        namespace_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        api_key: str | None = None,
+        region: str | None = "gcp-us-central1",
     ) -> None:
         """Initialize the Turbopuffer Handshake.
 
@@ -106,7 +104,7 @@ class TurbopufferHandshake(BaseHandshake):
             )
         )
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write the chunks to the Turbopuffer database."""
         if isinstance(chunks, Chunk):
             chunks = [chunks]
@@ -143,8 +141,8 @@ class TurbopufferHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Search the Turbopuffer namespace for similar chunks.

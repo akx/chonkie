@@ -8,8 +8,9 @@ allows customization of sentence boundary delimiters and minimum sentence length
 
 import warnings
 from bisect import bisect_left
+from collections.abc import Sequence
 from itertools import accumulate
-from typing import Literal, Optional, Sequence, Union
+from typing import Literal
 
 from chonkie.logger import get_logger
 from chonkie.pipeline import chunker
@@ -57,14 +58,14 @@ class SentenceChunker(BaseChunker):
 
     def __init__(
         self,
-        tokenizer: Union[str, TokenizerProtocol] = "character",
+        tokenizer: str | TokenizerProtocol = "character",
         chunk_size: int = 2048,
         chunk_overlap: int = 0,
         min_sentences_per_chunk: int = 1,
         min_characters_per_sentence: int = 12,
         approximate: bool = False,
-        delim: Union[str, list[str]] = [". ", "! ", "? ", "\n"],
-        include_delim: Optional[Literal["prev", "next"]] = "prev",
+        delim: str | list[str] = [". ", "! ", "? ", "\n"],
+        include_delim: Literal["prev", "next"] | None = "prev",
     ):
         """Initialize the SentenceChunker with configuration parameters.
 
@@ -113,10 +114,10 @@ class SentenceChunker(BaseChunker):
 
     @classmethod
     def from_recipe(cls,
-        name: Optional[str] = "default",
-        lang: Optional[str] = "en",
-        path: Optional[str] = None,
-        tokenizer: Union[str, TokenizerProtocol] = "character",
+        name: str | None = "default",
+        lang: str | None = "en",
+        path: str | None = None,
+        tokenizer: str | TokenizerProtocol = "character",
         chunk_size: int = 2048,
         chunk_overlap: int = 0,
         min_sentences_per_chunk: int = 1,

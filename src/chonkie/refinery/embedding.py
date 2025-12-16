@@ -1,6 +1,6 @@
 """Embedding Refinery."""
 
-from typing import Any, Union
+from typing import Any
 
 from chonkie.embeddings import AutoEmbeddings, BaseEmbeddings
 from chonkie.logger import get_logger
@@ -28,9 +28,7 @@ class EmbeddingsRefinery(BaseRefinery):
 
     def __init__(
         self,
-        embedding_model: Union[
-            str, BaseEmbeddings, AutoEmbeddings
-        ] = "minishlab/potion-retrieval-32M",
+        embedding_model: str | BaseEmbeddings | AutoEmbeddings = "minishlab/potion-retrieval-32M",
         **kwargs: dict[str, Any],
     ) -> None:
         """Initialize the EmbeddingRefinery."""

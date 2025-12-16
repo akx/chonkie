@@ -6,7 +6,6 @@ from typing import (
     Any,
     Literal,
     Optional,
-    Union,
 )
 from uuid import NAMESPACE_OID, uuid5
 
@@ -58,11 +57,11 @@ class QdrantHandshake(BaseHandshake):
     def __init__(
         self,
         client: Optional["qdrant_client.QdrantClient"] = None,
-        collection_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        url: Optional[str] = None,
-        path: Optional[str] = None,
-        api_key: Optional[str] = None,
+        collection_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        url: str | None = None,
+        path: str | None = None,
+        api_key: str | None = None,
         **kwargs: dict[str, Any],
     ) -> None:
         """Initialize the Qdrant Handshake.
@@ -162,7 +161,7 @@ class QdrantHandshake(BaseHandshake):
             "token_count": chunk.token_count,
         }
 
-    def _get_points(self, chunks: Union[Chunk, list[Chunk]]) -> list["PointStruct"]:
+    def _get_points(self, chunks: Chunk | list[Chunk]) -> list["PointStruct"]:
         """Get the points from the chunks."""
         # Normalize input to always be a sequence
         if isinstance(chunks, Chunk):
@@ -179,7 +178,7 @@ class QdrantHandshake(BaseHandshake):
             )
         return points
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write the chunks to the collection."""
         if isinstance(chunks, Chunk):
             chunks = [chunks]
@@ -200,8 +199,8 @@ class QdrantHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Retrieve the top_k most similar chunks to the query.

@@ -1,7 +1,7 @@
 """Sentence Chunking for Chonkie API."""
 
 import os
-from typing import Any, Literal, Optional, Union, cast
+from typing import Any, Literal, cast
 
 import requests
 
@@ -25,9 +25,9 @@ class SentenceChunker(CloudChunker):
         min_sentences_per_chunk: int = 1,
         min_characters_per_sentence: int = 12,
         approximate: bool = True,
-        delim: Union[str, list[str]] = [". ", "! ", "? ", "\n"],
-        include_delim: Union[Literal["prev", "next"], None] = "prev",
-        api_key: Optional[str] = None,
+        delim: str | list[str] = [". ", "! ", "? ", "\n"],
+        include_delim: Literal["prev", "next"] | None = "prev",
+        api_key: str | None = None,
     ) -> None:
         """Initialize the SentenceChunker."""
         # If no API key is provided, use the environment variable
@@ -74,7 +74,7 @@ class SentenceChunker(CloudChunker):
         # Initialize the file manager to upload files if needed
         self.file_manager = FileManager(api_key=self.api_key)
 
-    def chunk(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def chunk(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Chunk the text or file via sentence boundaries."""
         # Define the payload for the request
         payload: dict[str, Any]
@@ -138,6 +138,6 @@ class SentenceChunker(CloudChunker):
                 + "If the issue persists, please contact support at support@chonkie.ai."
             ) from error
 
-    def __call__(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def __call__(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Call the SentenceChunker."""
         return self.chunk(text=text, file=file)

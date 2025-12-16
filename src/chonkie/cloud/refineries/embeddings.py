@@ -1,6 +1,6 @@
 """Embeddings Refinery for Chonkie Cloud."""
 import os
-from typing import Any, Optional, cast
+from typing import Any, cast
 
 import numpy as np
 import requests
@@ -11,7 +11,7 @@ from .base import BaseRefinery
 class EmbeddingsRefinery(BaseRefinery):
     """Embeddings Refinery for Chonkie Cloud."""
 
-    def __init__(self, embedding_model: str = "minishlab/potion-retrieval-32M", api_key: Optional[str] = None):
+    def __init__(self, embedding_model: str = "minishlab/potion-retrieval-32M", api_key: str | None = None):
         """Initialize the EmbeddingsRefinery.
 
         Args:

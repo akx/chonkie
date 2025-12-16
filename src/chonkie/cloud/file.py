@@ -2,7 +2,6 @@
 
 import os
 from dataclasses import dataclass
-from typing import Optional
 
 import requests
 
@@ -24,7 +23,7 @@ class File:
 class FileManager:
     """File management functions for Chonkie API."""
 
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: str | None = None):
         """Initialize the FileManager."""
         self.api_key = api_key or os.getenv("CHONKIE_API_KEY")
         if not self.api_key:

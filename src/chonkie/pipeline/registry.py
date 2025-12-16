@@ -1,10 +1,11 @@
 """Component registry for pipeline components."""
 
-from typing import Any, Callable, Optional, Type, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from .component import Component, ComponentType
 
-ComponentT = TypeVar('ComponentT', bound=Type[Any])
+ComponentT = TypeVar('ComponentT', bound=type[Any])
 
 
 class _ComponentRegistry:
@@ -72,7 +73,7 @@ class _ComponentRegistry:
         self._component_types[component_type].append(name)
 
     def get_component(
-        self, name_or_alias: str, component_type: Optional[ComponentType] = None
+        self, name_or_alias: str, component_type: ComponentType | None = None
     ) -> Component:
         """Get component info by name or alias.
 
@@ -128,7 +129,7 @@ class _ComponentRegistry:
         )
 
     def list_components(
-        self, component_type: Optional[ComponentType] = None
+        self, component_type: ComponentType | None = None
     ) -> list[Component]:
         """List all registered components, optionally filtered by type.
 
@@ -144,7 +145,7 @@ class _ComponentRegistry:
             return [self._components[name] for name in names]
         return list(self._components.values())
 
-    def get_aliases(self, component_type: Optional[ComponentType] = None) -> list[str]:
+    def get_aliases(self, component_type: ComponentType | None = None) -> list[str]:
         """Get all available aliases, optionally filtered by type.
 
         Args:
@@ -267,7 +268,7 @@ class _ComponentRegistry:
                 return True
         return False
 
-    def unregister(self, name_or_alias: str, component_type: Optional[ComponentType] = None) -> None:
+    def unregister(self, name_or_alias: str, component_type: ComponentType | None = None) -> None:
         """Unregister a component (mainly for testing).
 
         Args:

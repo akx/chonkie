@@ -3,7 +3,7 @@
 import importlib.util as importutil
 import os
 import warnings
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
@@ -38,7 +38,7 @@ class GeminiEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str = DEFAULT_MODEL,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         task_type: str = "SEMANTIC_SIMILARITY",
         max_retries: int = 3,
         batch_size: int = 100,

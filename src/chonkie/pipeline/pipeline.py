@@ -3,7 +3,7 @@
 import inspect
 import json
 from pathlib import Path
-from typing import Any, Optional, Union
+from typing import Any
 
 from chonkie.types import Document
 from chonkie.utils import Hubbie
@@ -57,7 +57,7 @@ class Pipeline:
         self._component_instances: dict[tuple[str, str], Any] = {}  # Cache: (name, json_kwargs) -> instance
 
     @classmethod
-    def from_recipe(cls, name: str, path: Optional[str] = None) -> "Pipeline":
+    def from_recipe(cls, name: str, path: str | None = None) -> "Pipeline":
         """Create pipeline from a pre-defined recipe.
 
         Recipes are loaded from the Chonkie Hub (chonkie-ai/recipes repo)
@@ -100,7 +100,7 @@ class Pipeline:
         return cls.from_config(steps)
 
     @classmethod
-    def from_config(cls, config: Union[str, list[Union[tuple[Any, ...], dict[str, Any]]]]) -> "Pipeline":
+    def from_config(cls, config: str | list[tuple[Any, ...] | dict[str, Any]]) -> "Pipeline":
         """Create pipeline from config list or JSON file path.
 
         Args:
@@ -324,7 +324,7 @@ class Pipeline:
         self._steps.append({"type": "write", "component": component, "kwargs": kwargs})
         return self
 
-    def run(self, texts: Optional[Union[str, list[str]]] = None) -> Union[Document, list[Document]]:
+    def run(self, texts: str | list[str] | None = None) -> Document | list[Document]:
         """Run the pipeline and return the final result.
 
         The pipeline automatically reorders steps according to the CHOMP flow:
@@ -638,7 +638,7 @@ class Pipeline:
         self._component_instances.clear()
         return self
 
-    def to_config(self, path: Optional[str] = None) -> list[dict[str, Any]]:
+    def to_config(self, path: str | None = None) -> list[dict[str, Any]]:
         """Export pipeline to config format and optionally save to file.
 
         Args:

@@ -1,10 +1,9 @@
 """Base class for Handshakes."""
 
 from abc import ABC, abstractmethod
+from collections.abc import Sequence
 from typing import (
     Any,
-    Sequence,
-    Union,
 )
 
 from chonkie.logger import get_logger
@@ -23,7 +22,7 @@ class BaseHandshake(ABC):
     """Abstract base class for Handshakes."""
 
     @abstractmethod
-    def write(self, chunk: Union[Chunk, list[Chunk]]) -> Any:
+    def write(self, chunk: Chunk | list[Chunk]) -> Any:
         """Write a single chunk to the vector database.
 
         Args:
@@ -35,7 +34,7 @@ class BaseHandshake(ABC):
         """
         raise NotImplementedError
 
-    def __call__(self, chunks: Union[Chunk, list[Chunk]]) -> Any:
+    def __call__(self, chunks: Chunk | list[Chunk]) -> Any:
         """Write chunks using the default batch method when the instance is called.
 
         Args:

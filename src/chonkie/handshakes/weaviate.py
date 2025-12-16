@@ -5,8 +5,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Optional,
-    Union,
 )
 from urllib.parse import urlparse
 from uuid import NAMESPACE_OID, uuid5
@@ -48,18 +46,18 @@ class WeaviateHandshake(BaseHandshake):
 
     def __init__(
         self,
-        client: Optional[Any] = None,  # weaviate.Client
-        collection_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        url: Optional[str] = None,
-        api_key: Optional[str] = None,
-        auth_config: Optional[dict[str, Any]] = None,
+        client: Any | None = None,  # weaviate.Client
+        collection_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        url: str | None = None,
+        api_key: str | None = None,
+        auth_config: dict[str, Any] | None = None,
         batch_size: int = 100,
         batch_dynamic: bool = True,
         batch_timeout_retries: int = 3,
-        additional_headers: Optional[dict[str, str]] = None,
+        additional_headers: dict[str, str] | None = None,
         http_secure: bool = False,
-        grpc_host: Optional[str] = None,
+        grpc_host: str | None = None,
         grpc_port: int = 50051,
         grpc_secure: bool = False,
     ) -> None:
@@ -107,7 +105,7 @@ class WeaviateHandshake(BaseHandshake):
                 host = parsed_url.hostname or "localhost"
                 port = parsed_url.port or 8080
 
-                auth_credentials: Optional[Any] = None
+                auth_credentials: Any | None = None
                 if api_key is not None:
                     auth_credentials = weaviate.auth.Auth.api_key(api_key=api_key)
                 elif auth_config is not None:
@@ -295,7 +293,7 @@ class WeaviateHandshake(BaseHandshake):
 
         return properties
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> list[str]:
+    def write(self, chunks: Chunk | list[Chunk]) -> list[str]:
         """Write chunks to the Weaviate collection.
 
         Args:
@@ -439,8 +437,8 @@ class WeaviateHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Retrieve the top_k most similar chunks to the query.

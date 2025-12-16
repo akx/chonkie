@@ -4,7 +4,7 @@ import asyncio
 import importlib.util as importutil
 import os
 import warnings
-from typing import TYPE_CHECKING, Literal, Optional
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
@@ -32,10 +32,10 @@ class VoyageAIEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str = DEFAULT_MODEL,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         max_retries: int = 3,
         timeout: float = 60.0,
-        output_dimension: Optional[Literal[256, 512, 1024, 2048]] = None,
+        output_dimension: Literal[256, 512, 1024, 2048] | None = None,
         batch_size: int = 128,
         truncation: bool = True,
     ):
@@ -114,7 +114,7 @@ class VoyageAIEmbeddings(BaseEmbeddings):
         tokens = self._tokenizer.encode_batch(texts)
         return [len(t) for t in tokens]
 
-    def embed(self, text: str, input_type: Optional[Literal["query", "document"]] = None) -> np.ndarray:
+    def embed(self, text: str, input_type: Literal["query", "document"] | None = None) -> np.ndarray:
         """Obtain embedding for a single text synchronously.
 
         Args:
@@ -144,7 +144,7 @@ class VoyageAIEmbeddings(BaseEmbeddings):
         
         return np.array(response.embeddings[0], dtype=np.float32)
 
-    async def aembed(self, text: str, input_type: Optional[Literal["query", "document"]] = None) -> "np.ndarray":
+    async def aembed(self, text: str, input_type: Literal["query", "document"] | None = None) -> "np.ndarray":
         """Obtain embedding for a single text asynchronously.
 
         Args:
@@ -175,7 +175,7 @@ class VoyageAIEmbeddings(BaseEmbeddings):
         
         return np.array(response.embeddings[0], dtype=np.float32)
 
-    def embed_batch(self, texts: list[str], input_type: Optional[Literal["query", "document"]] = None) -> list[np.ndarray]:
+    def embed_batch(self, texts: list[str], input_type: Literal["query", "document"] | None = None) -> list[np.ndarray]:
         """Obtain embeddings for a batch of texts synchronously.
 
         Args:
@@ -186,7 +186,7 @@ class VoyageAIEmbeddings(BaseEmbeddings):
             List of NumPy arrays representing embedding vectors.
 
         """
-        embeddings: list["np.ndarray"] = []
+        embeddings: list[np.ndarray] = []
         for i in range(0, len(texts), self.batch_size):
             batch = texts[i : i + self.batch_size]
             # Check token counts and warn if necessary
@@ -213,7 +213,7 @@ class VoyageAIEmbeddings(BaseEmbeddings):
         return embeddings
     
 
-    async def __process_batch(self, batch: list[str], input_type: Optional[Literal["query", "document"]] = None) -> list["np.ndarray"]:
+    async def __process_batch(self, batch: list[str], input_type: Literal["query", "document"] | None = None) -> list["np.ndarray"]:
         """Process a single batch of texts to obtain embeddings.
 
         This method is intended for internal use only.
@@ -250,7 +250,7 @@ class VoyageAIEmbeddings(BaseEmbeddings):
         except Exception as e:
             raise RuntimeError(f"VoyageAI API error during embedding: {e}") from e
 
-    async def aembed_batch(self, texts: list[str], input_type: Optional[Literal["query", "document"]] = None) -> list["np.ndarray"]:
+    async def aembed_batch(self, texts: list[str], input_type: Literal["query", "document"] | None = None) -> list["np.ndarray"]:
         """Obtain embeddings for a batch of texts asynchronously.
 
         Args:

@@ -1,7 +1,7 @@
 """Comprehensive tests for the SlumberChunker."""
 
 import json
-from typing import Any, Optional
+from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
@@ -14,7 +14,7 @@ from chonkie.types import Chunk, RecursiveLevel, RecursiveRules
 class MockGenie(BaseGenie):
     """Mock genie for testing SlumberChunker."""
     
-    def __init__(self, split_responses: Optional[list[int]] = None) -> None:
+    def __init__(self, split_responses: list[int] | None = None) -> None:
         """Initialize mock genie with predefined responses.
         
         Args:

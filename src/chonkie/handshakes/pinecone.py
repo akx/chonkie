@@ -7,7 +7,6 @@ from typing import (
     Any,
     Literal,
     Optional,
-    Union,
 )
 from uuid import NAMESPACE_OID, uuid5
 
@@ -45,11 +44,11 @@ class PineconeHandshake(BaseHandshake):
     def __init__(
         self,
         client: Optional["pinecone.Pinecone"] = None,
-        api_key: Optional[str] = None,
-        index_name: Union[str, Literal["random"]] = "random",
+        api_key: str | None = None,
+        index_name: str | Literal["random"] = "random",
         spec: Optional["pinecone.ServerlessSpec"] = None,
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        embed: Optional[dict[str, str]] = None,
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        embed: dict[str, str] | None = None,
         **kwargs: Any,
     ) -> None:
         """Initialize the Pinecone handshake.
@@ -77,7 +76,7 @@ class PineconeHandshake(BaseHandshake):
                 )
             self.client = pinecone.Pinecone(api_key=api_key, source_tag="chonkie")
 
-        self.embed: Optional[dict[str, str]] = embed
+        self.embed: dict[str, str] | None = embed
         if embed is not None:
             self.embedding_model = None
         elif isinstance(embedding_model, str):
@@ -145,7 +144,7 @@ class PineconeHandshake(BaseHandshake):
         }
 
     def _get_vectors(
-        self, chunks: Union[Chunk, list[Chunk]]
+        self, chunks: Chunk | list[Chunk]
     ) -> list[tuple[str, list[float], dict[str, Any]]]:
         """Generate vectors for the chunks.
 
@@ -173,7 +172,7 @@ class PineconeHandshake(BaseHandshake):
             ))
         return vectors
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write chunks to the Pinecone index.
 
         Args:
@@ -201,8 +200,8 @@ class PineconeHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Search the Pinecone index for similar chunks.

@@ -1,7 +1,6 @@
 """Test suite for LiteLLMEmbeddings."""
 
 import os
-from typing import List
 from unittest.mock import MagicMock, patch
 
 import numpy as np
@@ -24,7 +23,7 @@ def sample_text() -> str:
 
 
 @pytest.fixture
-def sample_texts() -> List[str]:
+def sample_texts() -> list[str]:
     """Fixture to create a list of sample texts for testing."""
     return [
         "This is the first sample text.",
@@ -90,7 +89,7 @@ def test_embed_single_text(mock_embed, embedding_model: LiteLLMEmbeddings, sampl
 )
 @patch("chonkie.embeddings.litellm.LiteLLMEmbeddings.embed_batch")
 def test_embed_batch_texts(
-    mock_embed_batch, embedding_model: LiteLLMEmbeddings, sample_texts: List[str]
+    mock_embed_batch, embedding_model: LiteLLMEmbeddings, sample_texts: list[str]
 ) -> None:
     """Test that LiteLLMEmbeddings correctly embeds a batch of texts."""
     mock_embed_batch.return_value = [
@@ -126,7 +125,7 @@ def test_similarity(
     mock_similarity,
     mock_embed_batch,
     embedding_model: LiteLLMEmbeddings,
-    sample_texts: List[str],
+    sample_texts: list[str],
 ) -> None:
     """Test that LiteLLMEmbeddings correctly calculates similarity between embeddings."""
     mock_embed_batch.return_value = [

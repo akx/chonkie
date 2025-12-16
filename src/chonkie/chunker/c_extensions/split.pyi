@@ -1,11 +1,12 @@
 """Stub file for split C extension."""
 
-from typing import Literal, Optional, Sequence, Union
+from collections.abc import Sequence
+from typing import Literal
 
 def split_text(
     text: str,
-    delim: Optional[Union[str, list[str]]] = None,
-    include_delim: Optional[Union[bool, Literal["prev", "next"]]] = False,
+    delim: str | list[str] | None = None,
+    include_delim: bool | Literal["prev", "next"] | None = False,
     min_characters_per_segment: int = 1,
     whitespace_mode: bool = False,
     character_fallback: bool = False

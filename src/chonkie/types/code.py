@@ -1,7 +1,6 @@
 """Module containing CodeChunker configuration types."""
 
 from dataclasses import dataclass
-from typing import Optional, Union
 
 
 @dataclass
@@ -10,7 +9,7 @@ class MergeRule:
 
   name: str
   node_types: list[str]
-  text_pattern: Optional[str] = None
+  text_pattern: str | None = None
   bidirectional: bool = False
 
 @dataclass
@@ -30,8 +29,8 @@ class SplitRule:
 
   name: str
   node_type: str
-  body_child: Union[str, list[str]]
-  exclude_nodes: Optional[list[str]] = None
+  body_child: str | list[str]
+  exclude_nodes: list[str] | None = None
   recursive: bool = False
 
 @dataclass

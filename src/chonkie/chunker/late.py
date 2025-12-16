@@ -1,6 +1,6 @@
 """Module containing the LateChunker class."""
 
-from typing import Any, Optional, Union
+from typing import Any
 
 import numpy as np
 
@@ -30,9 +30,7 @@ class LateChunker(RecursiveChunker):
 
     def __init__(
         self,
-        embedding_model: Union[
-            str, SentenceTransformerEmbeddings, Any
-        ] = "nomic-ai/modernbert-embed-base",
+        embedding_model: str | SentenceTransformerEmbeddings | Any = "nomic-ai/modernbert-embed-base",
         chunk_size: int = 2048,
         rules: RecursiveRules = RecursiveRules(),
         min_characters_per_chunk: int = 24,
@@ -75,10 +73,10 @@ class LateChunker(RecursiveChunker):
     
     @classmethod
     def from_recipe(cls,  # type: ignore[override]
-                    name: Optional[str] = "default", 
-                    lang: Optional[str] = "en", 
-                    path: Optional[str] = None, 
-                    embedding_model: Union[str, SentenceTransformerEmbeddings] = "sentence-transformers/all-MiniLM-L6-v2",
+                    name: str | None = "default", 
+                    lang: str | None = "en", 
+                    path: str | None = None, 
+                    embedding_model: str | SentenceTransformerEmbeddings = "sentence-transformers/all-MiniLM-L6-v2",
                     chunk_size: int = 2048,
                     min_characters_per_chunk: int = 24,
                     **kwargs: Any) -> "LateChunker":

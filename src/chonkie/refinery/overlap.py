@@ -2,7 +2,7 @@
 
 import warnings
 from functools import lru_cache
-from typing import Literal, Union
+from typing import Literal
 
 from chonkie.logger import get_logger
 from chonkie.pipeline import refinery
@@ -31,8 +31,8 @@ class OverlapRefinery(BaseRefinery):
 
     def __init__(
         self,
-        tokenizer: Union[str, TokenizerProtocol] = "character",
-        context_size: Union[int, float] = 0.25,
+        tokenizer: str | TokenizerProtocol = "character",
+        context_size: int | float = 0.25,
         mode: Literal["token", "recursive"] = "token",
         method: Literal["suffix", "prefix"] = "suffix",
         rules: RecursiveRules = RecursiveRules(),

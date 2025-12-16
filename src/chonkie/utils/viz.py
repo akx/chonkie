@@ -4,7 +4,6 @@ import base64
 import html
 import os
 import warnings
-from typing import Optional, Union
 
 from chonkie.logger import get_logger
 from chonkie.types import Chunk
@@ -152,7 +151,7 @@ class Visualizer:
     # Store the hippo SVG content as a class attribute
     HIPPO_SVG_CONTENT = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><text x="50" y="55" font-size="90" text-anchor="middle" dominant-baseline="middle">🦛</text></svg>"""
 
-    def __init__(self, theme: Union[str, list[str]] = "pastel") -> None:
+    def __init__(self, theme: str | list[str] = "pastel") -> None:
         """Initialize the Visualizer.
         
         Args:
@@ -244,7 +243,7 @@ class Visualizer:
             logger.warning(f"Could not darken color {hex_color}: {e}")
             return "#808080"
 
-    def print(self, chunks: list[Chunk], full_text: Optional[str] = None) -> None:
+    def print(self, chunks: list[Chunk], full_text: str | None = None) -> None:
         """Print the chunks to the terminal, with rich highlights."""
         # Check if there are any chunks to visualize
         if not chunks: 
@@ -289,7 +288,7 @@ class Visualizer:
         self,
         filename: str,
         chunks: list[Chunk],
-        full_text: Optional[str] = None,
+        full_text: str | None = None,
         title: str = "Chunk Visualization"
         # Removed embed_hippo_favicon parameter
     ) -> None:
@@ -454,7 +453,7 @@ class Visualizer:
             raise Exception(f"An unexpected error occurred during file saving: {e}")
             
 
-    def __call__(self, chunks: list[Chunk], full_text: Optional[str] = None) -> None:
+    def __call__(self, chunks: list[Chunk], full_text: str | None = None) -> None:
         """Call the visualizer as a function.
 
         Prints the chunks to the terminal, with rich highlights.

@@ -1,6 +1,6 @@
 """Late Chunking for Chonkie API."""
 
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
 
 import requests
 
@@ -22,7 +22,7 @@ class LateChunker(RecursiveChunker):
         min_characters_per_chunk: int = 24,
         recipe: str = "default",
         lang: str = "en",
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ) -> None:
         """Initialize the LateChunker for the Chonkie Cloud API.
 
@@ -44,7 +44,7 @@ class LateChunker(RecursiveChunker):
             lang=lang,
         )
 
-    def chunk(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def chunk(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Chunk the text or file into a list of late-interaction chunks via the Chonkie API.
 
         Args:
@@ -134,6 +134,6 @@ class LateChunker(RecursiveChunker):
                 + "If the issue persists, please contact support at support@chonkie.ai."
             ) from error
     
-    def __call__(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def __call__(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Call the LateChunker to chunk text."""
         return self.chunk(text=text, file=file)

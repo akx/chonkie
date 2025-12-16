@@ -5,7 +5,8 @@ import inspect
 import warnings
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from typing import TYPE_CHECKING, Any, Callable, Protocol, Sequence, Union
+from collections.abc import Callable, Sequence
+from typing import TYPE_CHECKING, Any, Protocol, Union
 
 if TYPE_CHECKING:
     import tiktoken
@@ -43,7 +44,7 @@ class TokenizerProtocol(Protocol):
         """
         ...
 
-    def tokenize(self, text: str) -> Sequence[Union[str, int]]:
+    def tokenize(self, text: str) -> Sequence[str | int]:
         """Tokenize text into tokens.
 
         Args:
@@ -120,7 +121,7 @@ class Tokenizer(ABC):
         raise NotImplementedError("Decoding not implemented for base tokenizer.")
 
     @abstractmethod
-    def tokenize(self, text: str) -> Sequence[Union[str, int]]:
+    def tokenize(self, text: str) -> Sequence[str | int]:
         """Tokenize the given text.
 
         Args:
@@ -461,7 +462,7 @@ class AutoTokenizer:
 
     """
 
-    def __init__(self, tokenizer: Union[str, Callable, Any] = "character"):
+    def __init__(self, tokenizer: str | Callable | Any = "character"):
         """Initialize the AutoTokenizer with a specified tokenizer."""
         if isinstance(tokenizer, AutoTokenizer):
             self.tokenizer = tokenizer.tokenizer  # type: ignore[has-type]

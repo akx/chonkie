@@ -9,7 +9,7 @@ Nomic, Cloudflare, MixedBread, DeepInfra, TogetherAI.
 
 import importlib.util as importutil
 import warnings
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import numpy as np
 
@@ -60,13 +60,13 @@ class CatsuEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str,
-        provider: Optional[str] = None,
-        api_keys: Optional[Dict[str, str]] = None,
+        provider: str | None = None,
+        api_keys: dict[str, str] | None = None,
         max_retries: int = 3,
         timeout: int = 30,
         verbose: bool = False,
         batch_size: int = 128,
-        **kwargs: Dict[str, Any],
+        **kwargs: dict[str, Any],
     ):
         """Initialize Catsu embeddings adapter.
 
@@ -107,8 +107,8 @@ class CatsuEmbeddings(BaseEmbeddings):
         )
 
         # Cache for model metadata
-        self._dimension: Optional[int] = None
-        self._model_info: Optional[Any] = None
+        self._dimension: int | None = None
+        self._model_info: Any | None = None
 
         # Validate model exists and is supported
         try:
@@ -161,7 +161,7 @@ class CatsuEmbeddings(BaseEmbeddings):
         embeddings_array = response.to_numpy()
         return embeddings_array[0]
 
-    def embed_batch(self, texts: List[str]) -> List[np.ndarray]:
+    def embed_batch(self, texts: list[str]) -> list[np.ndarray]:
         """Embed multiple texts using batched API calls.
 
         This method automatically handles batching to respect API limits
@@ -308,7 +308,7 @@ class CatsuTokenizerWrapper:
         self,
         client: Any,
         model: str,
-        provider: Optional[str] = None,
+        provider: str | None = None,
     ):
         """Initialize the tokenizer wrapper.
 
@@ -341,7 +341,7 @@ class CatsuTokenizerWrapper:
         )
         return response.token_count
 
-    def encode(self, text: str) -> List[int]:
+    def encode(self, text: str) -> list[int]:
         """Encode text to token IDs.
 
         Note: Not all providers expose token IDs. This method uses

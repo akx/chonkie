@@ -1,6 +1,7 @@
 """Test for the Chonkie Cloud Code Chunker class."""
 
-from typing import Any, Callable, Union
+from collections.abc import Callable
+from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
@@ -55,9 +56,9 @@ console.log(calc.add(5, 3));
 
 
 @pytest.fixture
-def mock_api_response() -> Callable[[Union[str, list[str]], int], Union[list[dict[str, Any]], list[list[dict[str, Any]]]]]:
+def mock_api_response() -> Callable[[str | list[str], int], list[dict[str, Any]] | list[list[dict[str, Any]]]]:
     """Mock successful API response."""
-    def _mock_response(text_input: Union[str, list[str]], chunk_count: int = 1) -> Union[list[dict[str, Any]], list[list[dict[str, Any]]]]:
+    def _mock_response(text_input: str | list[str], chunk_count: int = 1) -> list[dict[str, Any]] | list[list[dict[str, Any]]]:
         if isinstance(text_input, str):
             # Single text input - split into multiple chunks for longer text
             if len(text_input) > 100:

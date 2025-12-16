@@ -2,7 +2,6 @@
 
 import os
 from pathlib import Path
-from typing import Optional, Union
 
 from chonkie.pipeline import fetcher
 
@@ -24,10 +23,10 @@ class FileFetcher(BaseFetcher):
 
     def fetch(
         self,
-        path: Optional[str] = None,
-        dir: Optional[str] = None,
-        ext: Optional[list[str]] = None,
-    ) -> Union[Path, list[Path]]:
+        path: str | None = None,
+        dir: str | None = None,
+        ext: list[str] | None = None,
+    ) -> Path | list[Path]:
         """Fetch a single file or files from a directory.
 
         Args:
@@ -94,10 +93,10 @@ class FileFetcher(BaseFetcher):
 
     def __call__(
         self,
-        path: Optional[str] = None,
-        dir: Optional[str] = None,
-        ext: Optional[list[str]] = None,
-    ) -> Union[Path, list[Path]]:  # type: ignore[override]
+        path: str | None = None,
+        dir: str | None = None,
+        ext: list[str] | None = None,
+    ) -> Path | list[Path]:  # type: ignore[override]
         """Fetch a single file or files from a directory.
 
         Args:

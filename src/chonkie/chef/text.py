@@ -1,7 +1,6 @@
 """TextChef is a chef that processes text data."""
 
 from pathlib import Path
-from typing import Union
 
 from chonkie.logger import get_logger
 from chonkie.pipeline import chef
@@ -16,7 +15,7 @@ logger = get_logger(__name__)
 class TextChef(BaseChef):
     """TextChef is a chef that processes text data."""
 
-    def process(self, path: Union[str, Path]) -> Document:
+    def process(self, path: str | Path) -> Document:
         """Process the text data from given file(s).
 
         Args:
@@ -43,7 +42,7 @@ class TextChef(BaseChef):
         """
         return Document(content=text)
 
-    def process_batch(self, paths: Union[list[str], list[Path]]) -> list[Document]:
+    def process_batch(self, paths: list[str] | list[Path]) -> list[Document]:
         """Process the text data in a batch.
 
         Args:
@@ -55,7 +54,7 @@ class TextChef(BaseChef):
         """
         return [self.process(path) for path in paths]
 
-    def __call__(self, path: Union[str, Path, list[str], list[Path]]) -> Union[Document, list[Document]]:  # type: ignore[override]
+    def __call__(self, path: str | Path | list[str] | list[Path]) -> Document | list[Document]:  # type: ignore[override]
         """Process the text data from given file(s).
 
         Args:

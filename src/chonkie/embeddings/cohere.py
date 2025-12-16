@@ -4,7 +4,7 @@ import importlib
 import importlib.util
 import os
 import warnings
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 import numpy as np
 import requests
@@ -52,8 +52,8 @@ class CohereEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str = DEFAULT_MODEL,
-        api_key: Optional[str] = None,
-        client_name: Optional[str] = None,
+        api_key: str | None = None,
+        client_name: str | None = None,
         max_retries: int = 3,
         timeout: float = 60.0,
         batch_size: int = 96,

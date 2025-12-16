@@ -1,6 +1,6 @@
 """Tests for BaseGenie class."""
 
-from typing import Any, Optional
+from typing import Any
 from unittest.mock import Mock
 
 import pytest
@@ -11,7 +11,7 @@ from chonkie import BaseGenie
 class ConcreteGenie(BaseGenie):
     """Concrete implementation of BaseGenie for testing."""
     
-    def __init__(self, responses: Optional[list[str]] = None, json_responses: Optional[list[Any]] = None) -> None:
+    def __init__(self, responses: list[str] | None = None, json_responses: list[Any] | None = None) -> None:
         """Initialize with predefined responses.
         
         Args:

@@ -6,7 +6,6 @@ from typing import (
     Any,
     Literal,
     Optional,
-    Union,
 )
 from uuid import NAMESPACE_OID, uuid5
 
@@ -46,11 +45,11 @@ class ElasticHandshake(BaseHandshake):
     def __init__(
         self,
         client: Optional["Elasticsearch"] = None,
-        index_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        hosts: Optional[Union[str, list[str]]] = None,
-        cloud_id: Optional[str] = None,
-        api_key: Optional[str] = None,
+        index_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        hosts: str | list[str] | None = None,
+        cloud_id: str | None = None,
+        api_key: str | None = None,
         **kwargs: dict[str, Any],
     ) -> None:
         """Initialize the Elasticsearch Handshake."""
@@ -139,7 +138,7 @@ class ElasticHandshake(BaseHandshake):
             })
         return actions
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write the chunks to the Elasticsearch index using the bulk API."""
         if isinstance(chunks, Chunk):
             chunks = [chunks]
@@ -163,8 +162,8 @@ class ElasticHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Retrieve the top_k most similar chunks to the query using KNN search.

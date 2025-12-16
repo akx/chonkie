@@ -3,7 +3,7 @@
 import importlib.util as importutil
 import os
 import warnings
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
@@ -41,12 +41,12 @@ class AzureOpenAIEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str = DEFAULT_MODEL,
-        azure_endpoint: Optional[str] = None,
-        tokenizer: Optional[Any] = None,
-        dimension: Optional[int] = None,
-        azure_api_key: Optional[str] = None,
+        azure_endpoint: str | None = None,
+        tokenizer: Any | None = None,
+        dimension: int | None = None,
+        azure_api_key: str | None = None,
         api_version: str = "2024-10-21",
-        deployment: Optional[str] = None,
+        deployment: str | None = None,
         max_retries: int = 3,
         timeout: float = 60.0,
         batch_size: int = 128,

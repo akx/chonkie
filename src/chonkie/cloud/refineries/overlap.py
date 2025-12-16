@@ -1,6 +1,6 @@
 """Overlap Refinery for Chonkie Cloud."""
 import os
-from typing import Any, Literal, Optional, Union, cast
+from typing import Any, Literal, cast
 
 import requests
 
@@ -12,13 +12,13 @@ class OverlapRefinery(BaseRefinery):
 
     def __init__(self,
         tokenizer: str = "gpt2",
-        context_size: Union[int, float] = 0.25,
+        context_size: int | float = 0.25,
         mode: Literal["token", "recursive"] = "token",
         method: Literal["suffix", "prefix"] = "suffix",
         recipe: str = "default",
         lang: str = "en",
         merge: bool = True,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ):
         """Initialize the OverlapRefinery.
 

@@ -3,7 +3,7 @@
 import importlib.util as importutil
 import os
 import warnings
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 import numpy as np
 import requests
@@ -34,7 +34,7 @@ class JinaEmbeddings(BaseEmbeddings):
             task: str = "text-matching",
             batch_size: int = 32,
             max_retries: int = 3,
-            api_key: Optional[str] = None
+            api_key: str | None = None
     ):
         """Initialize Jina embeddings.
 

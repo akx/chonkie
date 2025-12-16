@@ -6,7 +6,7 @@ It trains an encoder style model on the task of token-classification (think: NER
 """
 
 import importlib.util as importutil
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 from chonkie.logger import get_logger
 from chonkie.pipeline import chunker
@@ -69,11 +69,11 @@ class NeuralChunker(BaseChunker):
   DEFAULT_MODEL = "mirth/chonky_distilbert_base_uncased_1"
 
   def __init__(self,
-               model: Union[str, Any] = DEFAULT_MODEL,
-               tokenizer: Optional[Union[str, Any]] = None,
+               model: str | Any = DEFAULT_MODEL,
+               tokenizer: str | Any | None = None,
                device_map: str = "auto", 
                min_characters_per_chunk: int = 10, 
-               stride: Optional[int] = None) -> None:
+               stride: int | None = None) -> None:
     """Initialize the NeuralChunker object.
     
     Args:

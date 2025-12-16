@@ -1,8 +1,9 @@
 """Custom types for recursive chunking."""
 
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
-from typing import Iterator, Literal, Optional, Union
+from typing import Literal
 
 from chonkie.utils import Hubbie
 
@@ -20,10 +21,10 @@ class RecursiveLevel:
 
     """
 
-    delimiters: Optional[Union[str, list[str]]] = None
+    delimiters: str | list[str] | None = None
     whitespace: bool = False
-    include_delim: Optional[Literal["prev", "next"]] = "prev"
-    pattern: Optional[str] = None
+    include_delim: Literal["prev", "next"] | None = "prev"
+    pattern: str | None = None
     pattern_mode: Literal["split", "extract"] = "split"
 
     def _validate_fields(self) -> None:
@@ -87,7 +88,7 @@ class RecursiveLevel:
         return cls(**data)
 
     @classmethod
-    def from_recipe(cls, name: str, lang: Optional[str] = 'en') -> "RecursiveLevel":
+    def from_recipe(cls, name: str, lang: str | None = 'en') -> "RecursiveLevel":
         """Create RecursiveLevel object from a recipe.
         
         The recipes are registered in the [Chonkie Recipe Store](https://huggingface.co/datasets/chonkie-ai/recipes). If the recipe is not there, you can create your own recipe and share it with the community!
@@ -115,7 +116,7 @@ class RecursiveLevel:
 class RecursiveRules:
     """Expression rules for recursive chunking."""
 
-    levels: Optional[list[RecursiveLevel]] = None
+    levels: list[RecursiveLevel] | None = None
 
     def __post_init__(self) -> None:
         """Validate attributes."""
@@ -166,11 +167,11 @@ class RecursiveRules:
         """Return the number of levels."""
         return len(self.levels) if self.levels is not None else 0
             
-    def __getitem__(self, index: int) -> Optional[RecursiveLevel]:
+    def __getitem__(self, index: int) -> RecursiveLevel | None:
         """Return the RecursiveLevel at the specified index."""
         return self.levels[index] if self.levels is not None else None
 
-    def __iter__(self) -> Optional[Iterator[RecursiveLevel]]:
+    def __iter__(self) -> Iterator[RecursiveLevel] | None:
         """Return an iterator over the RecursiveLevels."""
         return iter(self.levels) if self.levels is not None else None
 
@@ -178,7 +179,7 @@ class RecursiveRules:
     def from_dict(cls, data: dict) -> "RecursiveRules":
         """Create a RecursiveRules object from a dictionary."""
         dict_levels = data.get("levels", None)
-        object_levels: Optional[list[RecursiveLevel]] = None
+        object_levels: list[RecursiveLevel] | None = None
         if dict_levels is not None:
             if isinstance(dict_levels, dict):
                 object_levels = [RecursiveLevel.from_dict(dict_levels)]
@@ -188,15 +189,15 @@ class RecursiveRules:
 
     def to_dict(self) -> dict:
         """Return the RecursiveRules as a dictionary."""
-        result: dict[str, Optional[list[dict]]] = dict()
+        result: dict[str, list[dict] | None] = dict()
         result["levels"] = [level.to_dict() for level in self.levels] if self.levels is not None else None
         return result
 
     @classmethod
     def from_recipe(cls, 
-                    name: Optional[str] = 'default', 
-                    lang: Optional[str] = 'en', 
-                    path: Optional[str] = None) -> "RecursiveRules":
+                    name: str | None = 'default', 
+                    lang: str | None = 'en', 
+                    path: str | None = None) -> "RecursiveRules":
         """Create a RecursiveRules object from a recipe.
         
         The recipes are registered in the [Chonkie Recipe Store](https://huggingface.co/datasets/chonkie-ai/recipes).

@@ -5,7 +5,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Optional,
     Union,
 )
 
@@ -49,14 +48,14 @@ class MilvusHandshake(BaseHandshake):
 
     def __init__(
         self,
-        client: Optional[Any] = None, 
-        uri: Optional[str] = None,
-        collection_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
+        client: Any | None = None, 
+        uri: str | None = None,
+        collection_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
         host: str = "localhost",
         port: str = "19530",
-        user: Optional[str] = "",
-        api_key: Optional[str] = "",
+        user: str | None = "",
+        api_key: str | None = "",
         alias: str = "default",
         **kwargs: Any,
     ) -> None:
@@ -162,7 +161,7 @@ class MilvusHandshake(BaseHandshake):
         collection.create_index(field_name="embedding", index_params=index_params)
         logger.info("Created default HNSW index on 'embedding' field.")
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write the chunks to the Milvus collection."""
         if isinstance(chunks, Chunk):
             chunks = [chunks]
@@ -187,8 +186,8 @@ class MilvusHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[Union[list[float], "np.ndarray"]] = None,
+        query: str | None = None,
+        embedding: Union[list[float], "np.ndarray"] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Retrieve the top_k most similar chunks to the query."""

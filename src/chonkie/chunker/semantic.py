@@ -5,7 +5,7 @@ and calculates window embeddings directly rather than approximating them from se
 It uses Savitzky-Golay filtering for smoother boundary detection.
 """
 
-from typing import Any, Literal, Optional, Union
+from typing import Any, Literal
 
 import numpy as np
 
@@ -46,14 +46,14 @@ class SemanticChunker(BaseChunker):
 
     def __init__(
         self,
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-base-32M",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-base-32M",
         threshold: float = 0.8,
         chunk_size: int = 2048,
         similarity_window: int = 3,
         min_sentences_per_chunk: int = 1,
         min_characters_per_sentence: int = 24,
-        delim: Union[str, list[str]] = [". ", "! ", "? ", "\n"],
-        include_delim: Optional[Literal["prev", "next"]] = "prev",
+        delim: str | list[str] = [". ", "! ", "? ", "\n"],
+        include_delim: Literal["prev", "next"] | None = "prev",
         skip_window: int = 0,
         filter_window: int = 5,
         filter_polyorder: int = 3,
@@ -133,16 +133,16 @@ class SemanticChunker(BaseChunker):
     def from_recipe(
         cls,
         name: str = "default",
-        lang: Optional[str] = "en",
-        path: Optional[str] = None,
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-base-32M",
+        lang: str | None = "en",
+        path: str | None = None,
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-base-32M",
         threshold: float = 0.8,
         chunk_size: int = 2048,
         similarity_window: int = 3,
         min_sentences_per_chunk: int = 1,
         min_characters_per_sentence: int = 24,
-        delim: Union[str, list[str]] = [". ", "! ", "? ", "\n"],
-        include_delim: Optional[Literal["prev", "next"]] = "prev",
+        delim: str | list[str] = [". ", "! ", "? ", "\n"],
+        include_delim: Literal["prev", "next"] | None = "prev",
         skip_window: int = 0,
         filter_window: int = 5,
         filter_polyorder: int = 3,
@@ -294,7 +294,7 @@ class SemanticChunker(BaseChunker):
         return similarities
 
     def _get_split_indices(
-        self, similarities: Union[list[float], np.ndarray]
+        self, similarities: list[float] | np.ndarray
     ) -> list[int]:
         """Get split indices using optimized Savitzky-Golay filter with interpolation."""
         # Convert to numpy array if needed
@@ -363,7 +363,7 @@ class SemanticChunker(BaseChunker):
 
     def _get_windowed_similarity(
         self, sentences: list[Sentence]
-    ) -> Union[list[float], np.ndarray]:
+    ) -> list[float] | np.ndarray:
         """Alternative similarity computation using windowed cross-similarity.
 
         This can be more robust than pairwise window-sentence comparison.

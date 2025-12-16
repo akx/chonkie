@@ -6,7 +6,6 @@ Splits text into smaller chunks recursively. Express chunking logic through Recu
 from bisect import bisect_left
 from functools import lru_cache
 from itertools import accumulate
-from typing import Optional, Union
 
 from chonkie.chunker.base import BaseChunker
 from chonkie.logger import get_logger
@@ -49,7 +48,7 @@ class RecursiveChunker(BaseChunker):
 
     def __init__(
         self,
-        tokenizer: Union[str, TokenizerProtocol] = "character",
+        tokenizer: str | TokenizerProtocol = "character",
         chunk_size: int = 2048,
         rules: RecursiveRules = RecursiveRules(),
         min_characters_per_chunk: int = 24,
@@ -86,10 +85,10 @@ class RecursiveChunker(BaseChunker):
 
     @classmethod
     def from_recipe(cls,
-                    name: Optional[str] = 'default',
-                    lang: Optional[str] = 'en',
-                    path: Optional[str] = None,
-                    tokenizer: Union[str, TokenizerProtocol] = "character",
+                    name: str | None = 'default',
+                    lang: str | None = 'en',
+                    path: str | None = None,
+                    tokenizer: str | TokenizerProtocol = "character",
                     chunk_size: int = 2048,
                     min_characters_per_chunk: int = 24,
                     ) -> "RecursiveChunker":

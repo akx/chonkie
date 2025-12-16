@@ -2,7 +2,7 @@
 
 import re
 from pathlib import Path
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING
 
 from chonkie.chef.base import BaseChef
 from chonkie.logger import get_logger
@@ -47,7 +47,7 @@ class TableChef(BaseChef):
         logger.info(f"Markdown table extraction complete: found {len(tables)} tables")
         return MarkdownDocument(content=text, tables=tables)
 
-    def process(self, path: Union[str, Path]) -> Document:
+    def process(self, path: str | Path) -> Document:
         """Process a CSV/Excel file or markdown text into a MarkdownDocument.
 
         Args:
@@ -95,7 +95,7 @@ class TableChef(BaseChef):
         return self.parse(str(path))
 
     def process_batch(
-        self, paths: Union[list[str], list[Path]]
+        self, paths: list[str] | list[Path]
     ) -> list[Document]:
         """Process multiple CSV/Excel files or markdown texts.
 
@@ -112,8 +112,8 @@ class TableChef(BaseChef):
         return results
 
     def __call__(  # type: ignore[override]
-        self, path: Union[str, Path, list[str], list[Path]]
-    ) -> Union[Document, list[Document]]:
+        self, path: str | Path | list[str] | list[Path]
+    ) -> Document | list[Document]:
         """Process a single file/text or a batch of files/texts.
 
         Args:

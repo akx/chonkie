@@ -1,7 +1,7 @@
 """Recursive Chunking for Chonkie API."""
 
 import os
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
 
 import requests
 
@@ -24,7 +24,7 @@ class RecursiveChunker(CloudChunker):
         min_characters_per_chunk: int = 12,
         recipe: str = "default",
         lang: str = "en",
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ) -> None:
         """Initialize the RecursiveChunker.
 
@@ -70,7 +70,7 @@ class RecursiveChunker(CloudChunker):
         # Initialize the file manager to upload files if needed
         self.file_manager = FileManager(api_key=self.api_key)
 
-    def chunk(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Any:
+    def chunk(self, text: str | list[str] | None = None, file: str | None = None) -> Any:
         """Chunk the text or file into a list of chunks."""
         # Make the payload
         payload: dict[str, Any]
@@ -127,6 +127,6 @@ class RecursiveChunker(CloudChunker):
                 + "If the issue persists, please contact support at support@chonkie.ai."
             ) from error
 
-    def __call__(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Any:
+    def __call__(self, text: str | list[str] | None = None, file: str | None = None) -> Any:
         """Call the RecursiveChunker."""
         return self.chunk(text=text, file=file)

@@ -6,7 +6,6 @@ from typing import (
     Any,
     Literal,
     Optional,
-    Union,
 )
 from uuid import NAMESPACE_OID, uuid5
 
@@ -47,14 +46,14 @@ class MongoDBHandshake(BaseHandshake):
     def __init__(
         self,
         client: Optional["pymongo.MongoClient"] = None,
-        uri: Optional[str] = None,
-        username: Optional[str] = None,
-        password: Optional[str] = None,
-        hostname: Optional[str] = None,
-        port: Optional[Union[int, str]] = None,
-        db_name: Union[str, Literal["random"]] = "random",
-        collection_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
+        uri: str | None = None,
+        username: str | None = None,
+        password: str | None = None,
+        hostname: str | None = None,
+        port: int | str | None = None,
+        db_name: str | Literal["random"] = "random",
+        collection_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
         **kwargs: Any,
     ) -> None:
         """Initialize MongoDB Handshake with the specified connection parameters.
@@ -152,7 +151,7 @@ class MongoDBHandshake(BaseHandshake):
             "embedding": embedding,
         }
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write chunks to the MongoDB collection."""
         if isinstance(chunks, Chunk):
             chunks = [chunks]
@@ -177,8 +176,8 @@ class MongoDBHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Search for similar chunks in the MongoDB collection.

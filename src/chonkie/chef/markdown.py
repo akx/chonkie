@@ -2,7 +2,6 @@
 
 import re
 from pathlib import Path
-from typing import Union
 
 from chonkie.logger import get_logger
 from chonkie.pipeline import chef
@@ -32,7 +31,7 @@ class MarkdownChef(BaseChef):
 
   """
 
-  def __init__(self, tokenizer: Union[TokenizerProtocol, str] = "character") -> None:
+  def __init__(self, tokenizer: TokenizerProtocol | str = "character") -> None:
     """Initialize the MarkdownChef."""
     super().__init__()
     self.tokenizer = AutoTokenizer(tokenizer)
@@ -214,7 +213,7 @@ class MarkdownChef(BaseChef):
       chunks=chunks
     )
 
-  def process(self, path: Union[str, Path]) -> MarkdownDocument:
+  def process(self, path: str | Path) -> MarkdownDocument:
     """Process a markdown file into a MarkdownDocument.
 
     Args:

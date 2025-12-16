@@ -1,7 +1,8 @@
 """Registry for embedding implementations with pattern matching support."""
 
 import re
-from typing import Any, Optional, Pattern, Union
+from re import Pattern
+from typing import Any
 
 from .azure_openai import AzureOpenAIEmbeddings
 from .base import BaseEmbeddings
@@ -78,7 +79,7 @@ class EmbeddingsRegistry:
     @classmethod
     def register_types(
         cls,
-        types: Union[str, list[str]],
+        types: str | list[str],
         embeddings_cls: type[BaseEmbeddings]
     ) -> None:
         """Register a new type."""
@@ -94,12 +95,12 @@ class EmbeddingsRegistry:
             raise ValueError(f"Invalid types: {types}")
 
     @classmethod
-    def get_provider(cls, alias: str) -> Optional[type[BaseEmbeddings]]:
+    def get_provider(cls, alias: str) -> type[BaseEmbeddings] | None:
         """Get the embeddings class for a given provider alias."""
         return cls.provider_registry.get(alias)
 
     @classmethod
-    def match(cls, identifier: str) -> Optional[type[BaseEmbeddings]]:
+    def match(cls, identifier: str) -> type[BaseEmbeddings] | None:
         """Find matching embeddings class using both exact matches and patterns.
 
         Args:

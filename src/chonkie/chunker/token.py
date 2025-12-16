@@ -4,7 +4,7 @@ This module provides a TokenChunker class for splitting text into chunks of a sp
 
 """
 
-from typing import Generator, Sequence, Union
+from collections.abc import Generator, Sequence
 
 from tqdm import trange
 
@@ -30,9 +30,9 @@ class TokenChunker(BaseChunker):
 
     def __init__(
         self,
-        tokenizer: Union[str, TokenizerProtocol] = "character",
+        tokenizer: str | TokenizerProtocol = "character",
         chunk_size: int = 2048,
-        chunk_overlap: Union[int, float] = 0,
+        chunk_overlap: int | float = 0,
     ) -> None:
         """Initialize the TokenChunker with configuration parameters.
 
@@ -203,10 +203,10 @@ class TokenChunker(BaseChunker):
 
     def __call__(  # type: ignore[override]
         self,
-        text: Union[str, list[str]],
+        text: str | list[str],
         batch_size: int = 1,
         show_progress_bar: bool = True,
-    ) -> Union[list[Chunk], list[list[Chunk]]]:
+    ) -> list[Chunk] | list[list[Chunk]]:
         """Make the TokenChunker callable directly.
 
         Args:

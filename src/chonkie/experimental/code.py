@@ -45,7 +45,7 @@ class CodeChunker(BaseChunker):
 
   """
 
-  def __init__(self, language: str = "auto", tokenizer: str = "character", chunk_size: Optional[int] = None, add_split_context: bool = True) -> None:
+  def __init__(self, language: str = "auto", tokenizer: str = "character", chunk_size: int | None = None, add_split_context: bool = True) -> None:
     """Initialize the CodeChunker.
 
     Args:

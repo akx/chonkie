@@ -1,7 +1,7 @@
-from typing import Any, Optional, Union
+from typing import Any
 
 def savgol_filter(
-    data: Union[list[float], Any],
+    data: list[float] | Any,
     window_length: int = 5,
     polyorder: int = 3,
     deriv: int = 0,
@@ -23,7 +23,7 @@ def savgol_filter(
     ...
 
 def find_local_minima_interpolated(
-    data: Union[list[float], Any],
+    data: list[float] | Any,
     window_size: int = 11,
     poly_order: int = 2,
     tolerance: float = 0.2,
@@ -61,8 +61,8 @@ def windowed_cross_similarity(
     ...
 
 def filter_split_indices(
-    indices: Union[list[int], Any],
-    values: Union[list[float], Any],
+    indices: list[int] | Any,
+    values: list[float] | Any,
     threshold: float,
     min_distance: int
 ) -> tuple[list[int], list[float]]: 
@@ -83,7 +83,7 @@ def filter_split_indices(
 def get_cached_coeffs(
     window_size: int,
     poly_order: int,
-    dtype: Optional[type] = None
+    dtype: type | None = None
 ) -> None: 
     """Stub for compatibility - caching is handled internally in C.
     

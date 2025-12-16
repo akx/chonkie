@@ -1,7 +1,7 @@
 """Neural Chunking for Chonkie API."""
 
 import os
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
 
 import requests
 
@@ -28,7 +28,7 @@ class NeuralChunker(CloudChunker):
         self,
         model: str = DEFAULT_MODEL,
         min_characters_per_chunk: int = 10,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ) -> None:
         """Initialize the NeuralChunker."""
         self.api_key = api_key or os.getenv("CHONKIE_API_KEY")
@@ -66,8 +66,8 @@ class NeuralChunker(CloudChunker):
         self.file_manager = FileManager(api_key=self.api_key)
 
     def chunk(
-        self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None
-    ) -> Union[list[Chunk], list[list[Chunk]]]:
+        self, text: str | list[str] | None = None, file: str | None = None
+    ) -> list[Chunk] | list[list[Chunk]]:
         """Chunk the text or file into a list of chunks."""
         # Create the payload
         payload: dict[str, Any]
@@ -121,7 +121,7 @@ class NeuralChunker(CloudChunker):
             ) from error
 
     def __call__(
-        self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None
-    ) -> Union[list[Chunk], list[list[Chunk]]]:
+        self, text: str | list[str] | None = None, file: str | None = None
+    ) -> list[Chunk] | list[list[Chunk]]:
         """Call the NeuralChunker."""
         return self.chunk(text=text, file=file)

@@ -1,7 +1,7 @@
 """Pgvector Handshake to export Chonkie's Chunks into a PostgreSQL database with pgvector using vecs."""
 
 import importlib.util as importutil
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 from uuid import NAMESPACE_OID, uuid5
 
 from chonkie.embeddings import AutoEmbeddings, BaseEmbeddings
@@ -49,10 +49,10 @@ class PgvectorHandshake(BaseHandshake):
         database: str = "postgres",
         user: str = "postgres", 
         password: str = "postgres",
-        connection_string: Optional[str] = None,
+        connection_string: str | None = None,
         collection_name: str = "chonkie_chunks",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        vector_dimensions: Optional[int] = None,
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        vector_dimensions: int | None = None,
     ) -> None:
         """Initialize the Pgvector Handshake.
         
@@ -160,7 +160,7 @@ class PgvectorHandshake(BaseHandshake):
             
         return metadata
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> list[str]:
+    def write(self, chunks: Chunk | list[Chunk]) -> list[str]:
         """Write chunks to the PostgreSQL database using vecs.
         
         Args:
@@ -199,7 +199,7 @@ class PgvectorHandshake(BaseHandshake):
         self, 
         query: str, 
         limit: int = 5, 
-        filters: Optional[dict[str, Any]] = None,
+        filters: dict[str, Any] | None = None,
         include_metadata: bool = True,
         include_value: bool = True
     ) -> list[dict[str, Any]]:

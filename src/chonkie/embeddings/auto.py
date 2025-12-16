@@ -1,7 +1,7 @@
 """AutoEmbeddings is a factory class for automatically loading embeddings."""
 
 import warnings
-from typing import Any, Union
+from typing import Any
 
 from .base import BaseEmbeddings
 from .registry import EmbeddingsRegistry
@@ -31,7 +31,7 @@ class AutoEmbeddings:
     """
 
     @classmethod
-    def get_embeddings(cls, model: Union[str, BaseEmbeddings, Any], **kwargs: Any) -> BaseEmbeddings:
+    def get_embeddings(cls, model: str | BaseEmbeddings | Any, **kwargs: Any) -> BaseEmbeddings:
         """Get embeddings instance based on identifier.
 
         Args:

@@ -1,7 +1,7 @@
 """Code Chunking for Chonkie API."""
 
 import os
-from typing import Any, Literal, Optional, Union, cast
+from typing import Any, Literal, cast
 
 import requests
 
@@ -21,8 +21,8 @@ class CodeChunker(CloudChunker):
         self,
         tokenizer: str = "gpt2",
         chunk_size: int = 512,
-        language: Union[Literal["auto"], str] = "auto",
-        api_key: Optional[str] = None,
+        language: Literal["auto"] | str = "auto",
+        api_key: str | None = None,
     ) -> None:
         """Initialize the Cloud CodeChunker.
 
@@ -65,7 +65,7 @@ class CodeChunker(CloudChunker):
         # Initialize the file manager to upload files if needed
         self.file_manager = FileManager(api_key=self.api_key)
 
-    def chunk(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def chunk(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Chunk the code into a list of chunks.
 
         Args:
@@ -137,6 +137,6 @@ class CodeChunker(CloudChunker):
         except Exception as error:
             raise ValueError(f"Error parsing the response: {error}") from error
 
-    def __call__(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def __call__(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Call the chunker."""
         return self.chunk(text=text, file=file)

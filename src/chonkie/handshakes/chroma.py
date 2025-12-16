@@ -5,7 +5,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Optional,
     Union,
     cast,
 )
@@ -51,7 +50,7 @@ class ChromaEmbeddingFunction:
 
     def __init__(
         self,
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
         **kwargs: dict[str, Any],
     ) -> None:
         """Initialize the ChromaEmbeddingFunction."""
@@ -76,7 +75,7 @@ class ChromaEmbeddingFunction:
         return self._model_name
 
     def __call__(
-        self, input: Union[str, list[str]]
+        self, input: str | list[str]
     ) -> Union["np.ndarray", list["np.ndarray"]]:
         """Call the ChromaEmbeddingFunction."""
         if isinstance(input, str):
@@ -103,10 +102,10 @@ class ChromaHandshake(BaseHandshake):
 
     def __init__(
         self,
-        client: Optional[Any] = None,  # chromadb.Client
-        collection_name: Union[str, Literal["random"]] = "random",
-        embedding_model: Union[str, BaseEmbeddings] = "minishlab/potion-retrieval-32M",
-        path: Optional[str] = None,
+        client: Any | None = None,  # chromadb.Client
+        collection_name: str | Literal["random"] = "random",
+        embedding_model: str | BaseEmbeddings = "minishlab/potion-retrieval-32M",
+        path: str | None = None,
     ) -> None:
         """Initialize the Chroma Handshake.
 
@@ -183,7 +182,7 @@ class ChromaHandshake(BaseHandshake):
             "token_count": chunk.token_count,
         }
 
-    def write(self, chunks: Union[Chunk, list[Chunk]]) -> None:
+    def write(self, chunks: Chunk | list[Chunk]) -> None:
         """Write the Chunks to the Chroma collection."""
         if isinstance(chunks, Chunk):
             chunks = [chunks]
@@ -210,8 +209,8 @@ class ChromaHandshake(BaseHandshake):
 
     def search(
         self,
-        query: Optional[str] = None,
-        embedding: Optional[list[float]] = None,
+        query: str | None = None,
+        embedding: list[float] | None = None,
         limit: int = 5,
     ) -> list[dict[str, Any]]:
         """Search the Chroma collection for similar chunks.

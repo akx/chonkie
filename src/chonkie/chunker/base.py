@@ -2,7 +2,7 @@
 
 import warnings
 from abc import ABC, abstractmethod
-from typing import Sequence, Union
+from collections.abc import Sequence
 
 from tqdm import tqdm
 
@@ -17,7 +17,7 @@ class BaseChunker(ABC):
     """Base class for all chunkers."""
 
     def __init__(
-        self, tokenizer: Union[str, TokenizerProtocol] = "gpt2"
+        self, tokenizer: str | TokenizerProtocol = "gpt2"
     ):
         """Initialize the chunker with any necessary parameters.
 
@@ -44,8 +44,8 @@ class BaseChunker(ABC):
         return f"{self.__class__.__name__}()"
 
     def __call__(
-        self, text: Union[str, Sequence[str]], show_progress: bool = True
-    ) -> Union[list[Chunk], list[list[Chunk]]]:
+        self, text: str | Sequence[str], show_progress: bool = True
+    ) -> list[Chunk] | list[list[Chunk]]:
         """Call the chunker with the given arguments.
 
         Args:

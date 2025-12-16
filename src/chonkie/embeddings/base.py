@@ -1,7 +1,7 @@
 """Base class for all embeddings implementations."""
 
 from abc import ABC, abstractmethod
-from typing import Any, Union
+from typing import Any
 
 import numpy as np
 
@@ -114,8 +114,8 @@ class BaseEmbeddings(ABC):
         return self.__class__.__name__ + "()"
 
     def __call__(
-        self, text: Union[str, list[str]]
-    ) -> Union[np.ndarray, list[np.ndarray]]:
+        self, text: str | list[str]
+    ) -> np.ndarray | list[np.ndarray]:
         """Embed a text string into a vector representation.
 
         This method allows the embeddings object to be called directly with a text string

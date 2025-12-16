@@ -4,7 +4,7 @@ import builtins
 import os
 import re
 from dataclasses import dataclass, field
-from typing import Any, Optional, Union
+from typing import Any
 
 import requests
 
@@ -77,8 +77,8 @@ class Pipeline:
     def __init__(
         self,
         slug: str,
-        description: Optional[str] = None,
-        api_key: Optional[str] = None,
+        description: str | None = None,
+        api_key: str | None = None,
     ) -> None:
         """Initialize a new cloud Pipeline.
 
@@ -111,9 +111,9 @@ class Pipeline:
         self._description = description
         self._steps: list[PipelineStep] = []
         self._is_saved = False
-        self._id: Optional[str] = None
-        self._created_at: Optional[str] = None
-        self._updated_at: Optional[str] = None
+        self._id: str | None = None
+        self._created_at: str | None = None
+        self._updated_at: str | None = None
 
         # Initialize file manager for file uploads
         self._file_manager = FileManager(api_key=self._api_key)
@@ -124,7 +124,7 @@ class Pipeline:
         return self._slug
 
     @property
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         """Return the pipeline description."""
         return self._description
 
@@ -146,7 +146,7 @@ class Pipeline:
         }
 
     @classmethod
-    def get(cls, slug: str, api_key: Optional[str] = None) -> "Pipeline":
+    def get(cls, slug: str, api_key: str | None = None) -> "Pipeline":
         """Fetch an existing pipeline from the cloud.
 
         Args:
@@ -199,7 +199,7 @@ class Pipeline:
         return pipeline
 
     @classmethod
-    def list(cls, api_key: Optional[str] = None) -> list["Pipeline"]:
+    def list(cls, api_key: str | None = None) -> list["Pipeline"]:
         """List all pipelines from the cloud.
 
         Args:
@@ -252,8 +252,8 @@ class Pipeline:
     def validate(
         cls,
         steps: builtins.list[dict[str, Any]],
-        api_key: Optional[str] = None,
-    ) -> tuple[bool, Optional[builtins.list[str]]]:
+        api_key: str | None = None,
+    ) -> tuple[bool, builtins.list[str] | None]:
         """Validate a pipeline configuration via the cloud API.
 
         Args:
@@ -394,7 +394,7 @@ class Pipeline:
 
         return self
 
-    def update(self, description: Optional[str] = None) -> "Pipeline":
+    def update(self, description: str | None = None) -> "Pipeline":
         """Update the pipeline in the cloud.
 
         Args:
@@ -458,8 +458,8 @@ class Pipeline:
 
     def run(
         self,
-        text: Optional[Union[str, builtins.list[str]]] = None,
-        file: Optional[str] = None,
+        text: str | builtins.list[str] | None = None,
+        file: str | None = None,
     ) -> builtins.list[Chunk]:
         """Execute the pipeline via the cloud API.
 

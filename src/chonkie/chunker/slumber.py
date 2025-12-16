@@ -2,7 +2,6 @@
 
 from bisect import bisect_left
 from itertools import accumulate
-from typing import Optional, Union
 
 from tqdm import tqdm
 
@@ -43,8 +42,8 @@ class SlumberChunker(BaseChunker):
     """SlumberChunker is a chunker based on the LumberChunker — but slightly different."""
 
     def __init__(self,
-                 genie: Optional[BaseGenie] = None,
-                 tokenizer: Union[str, TokenizerProtocol] = "character",
+                 genie: BaseGenie | None = None,
+                 tokenizer: str | TokenizerProtocol = "character",
                  chunk_size: int = 2048,
                  rules: RecursiveRules = RecursiveRules(),
                  candidate_size: int = 128,

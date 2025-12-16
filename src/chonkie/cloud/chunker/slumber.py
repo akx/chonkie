@@ -1,7 +1,7 @@
 """Slumber Chunking for Chonkie API."""
 
 import os
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
 
 import requests
 
@@ -25,7 +25,7 @@ class SlumberChunker(CloudChunker):
         lang: str = "en",
         candidate_size: int = 128,
         min_characters_per_chunk: int = 24,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ) -> None:
         """Initialize the SlumberChunker.
 
@@ -75,7 +75,7 @@ class SlumberChunker(CloudChunker):
         self.file_manager = FileManager(api_key=self.api_key)
 
 
-    def chunk(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def chunk(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Chunk the text or file into a list of chunks using the Slumber strategy via API.
 
         Args:
@@ -168,7 +168,7 @@ class SlumberChunker(CloudChunker):
             ) from error
 
 
-    def __call__(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def __call__(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Call the SlumberChunker."""
         return self.chunk(text=text, file=file)
 

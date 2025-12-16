@@ -3,7 +3,6 @@
 import importlib.util as importutil
 import json
 from pathlib import Path
-from typing import Optional
 
 
 class Hubbie: 
@@ -51,7 +50,7 @@ class Hubbie:
         except ImportError as error:
             raise ImportError(f"Tried importing dependencies but got error: {error}.")
 
-    def _check_dependencies(self) -> Optional[bool]:
+    def _check_dependencies(self) -> bool | None:
         """Check if the required dependencies are available."""
         dependencies = ["huggingface_hub", "jsonschema"]
         for dependency in dependencies:
@@ -69,7 +68,7 @@ class Hubbie:
         with Path(path).open("r") as f:
             return dict(json.loads(f.read()))
 
-    def _validate_recipe(self, recipe: dict) -> Optional[bool]:
+    def _validate_recipe(self, recipe: dict) -> bool | None:
         """Validate a recipe against the current schema."""
         try:
             jsonschema.validate(recipe, self.recipe_schema) # type: ignore
@@ -78,9 +77,9 @@ class Hubbie:
             raise ValueError(f"Recipe is invalid. Please check the recipe and try again. Error: {error}")
 
     def get_recipe(self,
-                  name: Optional[str] = 'default',
-                  lang: Optional[str] = 'en',
-                  path: Optional[str] = None) -> dict:
+                  name: str | None = 'default',
+                  lang: str | None = 'en',
+                  path: str | None = None) -> dict:
         """Get a recipe from the hub.
         
         Args:
@@ -135,7 +134,7 @@ class Hubbie:
         # Return the recipe
         return recipe
 
-    def get_pipeline_recipe(self, name: str, path: Optional[str] = None) -> dict:
+    def get_pipeline_recipe(self, name: str, path: str | None = None) -> dict:
         """Get a pipeline recipe from the hub.
 
         Args:

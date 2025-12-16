@@ -2,7 +2,7 @@
 import importlib.util as importutil
 import json
 import os
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from .base import BaseGenie
 
@@ -14,7 +14,7 @@ class GeminiGenie(BaseGenie):
 
     def __init__(self,
                 model: str = "gemini-3-pro-preview",
-                api_key: Optional[str] = None):
+                api_key: str | None = None):
         """Initialize the GeminiGenie class.
 
         Args:

@@ -1,7 +1,7 @@
 """Azure OpenAI Genie."""
 
 import importlib.util as importutil
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from .base import BaseGenie
 
@@ -17,8 +17,8 @@ class AzureOpenAIGenie(BaseGenie):
         self,
         azure_endpoint: str,
         model: str = "gpt-4o",
-        deployment: Optional[str] = None,
-        azure_api_key: Optional[str] = None,
+        deployment: str | None = None,
+        azure_api_key: str | None = None,
         api_version: str = "2024-10-21",
     ):
         """Initialize AzureOpenAIGenie.

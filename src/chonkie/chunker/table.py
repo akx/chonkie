@@ -2,7 +2,6 @@
 
 import re
 import warnings
-from typing import Union
 
 from chonkie.chunker.base import BaseChunker
 from chonkie.logger import get_logger
@@ -19,7 +18,7 @@ class TableChunker(BaseChunker):
 
     def __init__(
         self,
-        tokenizer: Union[str, TokenizerProtocol] = "row",
+        tokenizer: str | TokenizerProtocol = "row",
         chunk_size: int = 3,
     ) -> None:
         """Initialize the TableChunker with configuration parameters.

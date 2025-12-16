@@ -1,7 +1,7 @@
 """Semantic Chunking for Chonkie API."""
 
 import os
-from typing import Any, Literal, Optional, Union, cast
+from typing import Any, Literal, cast
 
 import requests
 
@@ -25,13 +25,13 @@ class SemanticChunker(CloudChunker):
         similarity_window: int = 1,
         min_sentences_per_chunk: int = 1,
         min_characters_per_sentence: int = 12,
-        delim: Union[str, list[str]] = [". ", "! ", "? ", "\n"],
-        include_delim: Optional[Literal["prev", "next"]] = "prev",
+        delim: str | list[str] = [". ", "! ", "? ", "\n"],
+        include_delim: Literal["prev", "next"] | None = "prev",
         skip_window: int = 0,
         filter_window: int = 5,
         filter_polyorder: int = 3,
         filter_tolerance: float = 0.2,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ) -> None:
         """Initialize the Chonkie Cloud Semantic Chunker."""
         super().__init__()
@@ -117,7 +117,7 @@ class SemanticChunker(CloudChunker):
         # Initialize the file manager to upload files if needed
         self.file_manager = FileManager(api_key=self.api_key)
 
-    def chunk(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def chunk(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Chunk the text or file into a list of chunks."""
         # Make the payload
         payload: dict[str, Any]
@@ -189,6 +189,6 @@ class SemanticChunker(CloudChunker):
                 + "If the issue persists, please contact support at support@chonkie.ai."
             ) from error
 
-    def __call__(self, text: Optional[Union[str, list[str]]] = None, file: Optional[str] = None) -> Union[list[Chunk], list[list[Chunk]]]:
+    def __call__(self, text: str | list[str] | None = None, file: str | None = None) -> list[Chunk] | list[list[Chunk]]:
         """Call the chunker."""
         return self.chunk(text=text, file=file)

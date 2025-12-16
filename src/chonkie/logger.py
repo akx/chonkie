@@ -28,19 +28,20 @@ Example:
 import logging
 import os
 import sys
-from typing import Any, MutableMapping, Optional
+from collections.abc import MutableMapping
+from typing import Any
 
 # Track if we've configured the logger
 _configured = False
 _enabled = True
-_handler: Optional[logging.Handler] = None
+_handler: logging.Handler | None = None
 
 # Default configuration
 DEFAULT_LOG_LEVEL = "WARNING"
 DEFAULT_FORMAT = "%(asctime)s | %(levelname)-8s | %(name)s:%(funcName)s:%(lineno)d - %(message)s"
 
 
-def _parse_log_setting(value: Optional[str]) -> tuple[bool, str]:
+def _parse_log_setting(value: str | None) -> tuple[bool, str]:
     """Parse CHONKIE_LOG environment variable.
 
     Args:
@@ -185,8 +186,8 @@ def get_logger(module_name: str) -> LoggerAdapter:
 
 
 def configure(
-    level: Optional[str] = None,
-    format: Optional[str] = None,
+    level: str | None = None,
+    format: str | None = None,
 ) -> None:
     """Configure Chonkie's logging system programmatically.
 

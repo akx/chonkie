@@ -2,7 +2,7 @@
 
 import importlib.util as importutil
 import warnings
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
@@ -71,13 +71,13 @@ class LiteLLMEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str = DEFAULT_MODEL,
-        api_key: Optional[str] = None,
-        api_base: Optional[str] = None,
+        api_key: str | None = None,
+        api_base: str | None = None,
         timeout: float = 60.0,
         max_retries: int = 3,
         batch_size: int = 128,
-        dimension: Optional[int] = None,
-        **kwargs: Dict[str, Any],
+        dimension: int | None = None,
+        **kwargs: dict[str, Any],
     ):
         """Initialize LiteLLM embeddings.
 
@@ -178,7 +178,7 @@ class LiteLLMEmbeddings(BaseEmbeddings):
             )
             return tiktoken.get_encoding("cl100k_base")  # type: ignore
 
-    def _get_provider(self) -> Optional[str]:
+    def _get_provider(self) -> str | None:
         """Extract provider name from model string.
 
         Returns:
@@ -189,7 +189,7 @@ class LiteLLMEmbeddings(BaseEmbeddings):
             return self.model.split("/")[0]
         return None
 
-    def _prepare_api_call_kwargs(self) -> Dict[str, Any]:
+    def _prepare_api_call_kwargs(self) -> dict[str, Any]:
         """Prepare kwargs for litellm.embedding() call.
 
         Returns:
@@ -239,7 +239,7 @@ class LiteLLMEmbeddings(BaseEmbeddings):
         except Exception as e:
             raise RuntimeError(f"LiteLLM API error during embedding: {e}") from e
 
-    def embed_batch(self, texts: List[str]) -> List[np.ndarray]:
+    def embed_batch(self, texts: list[str]) -> list[np.ndarray]:
         """Get embeddings for multiple texts using batched API calls.
 
         Args:

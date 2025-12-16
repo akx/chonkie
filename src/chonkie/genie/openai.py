@@ -1,7 +1,7 @@
 """OpenAI Genie."""
 import importlib.util as importutil
 import os
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from .base import BaseGenie
 
@@ -15,8 +15,8 @@ class OpenAIGenie(BaseGenie):
 
     def __init__(self,
                  model: str = "gpt-4.1",
-                 base_url: Optional[str] = None,
-                 api_key: Optional[str] = None):
+                 base_url: str | None = None,
+                 api_key: str | None = None):
         """Initialize the OpenAIGenie class.
 
         Args:

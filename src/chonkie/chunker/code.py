@@ -7,7 +7,7 @@ This module provides a CodeChunker class for splitting code into chunks of a spe
 import warnings
 from bisect import bisect_left
 from itertools import accumulate
-from typing import TYPE_CHECKING, Any, Literal, Union
+from typing import TYPE_CHECKING, Any, Literal
 
 from chonkie.chunker.base import BaseChunker
 from chonkie.logger import get_logger
@@ -41,9 +41,9 @@ class CodeChunker(BaseChunker):
     """
 
     def __init__(self,
-                 tokenizer: Union[str, TokenizerProtocol] = "character",
+                 tokenizer: str | TokenizerProtocol = "character",
                  chunk_size: int = 2048,
-                 language: Union[Literal["auto"], Any] = "auto",
+                 language: Literal["auto"] | Any = "auto",
                  include_nodes: bool = False) -> None:
         """Initialize a CodeChunker object.
 
@@ -132,7 +132,7 @@ class CodeChunker(BaseChunker):
 
         # Have a current group and a current token count to keep track
         current_token_count = 0
-        current_node_group: list["Node"] = []
+        current_node_group: list[Node] = []
         for child in node.children:
             child_text = child.text.decode() if child.text else ""
             token_count: int = self.tokenizer.count_tokens(child_text)
@@ -182,7 +182,7 @@ class CodeChunker(BaseChunker):
 
         cumulative_group_token_counts = list(accumulate([0] + group_token_counts))
         
-        merged_node_groups: list[list["Node"]] = [] # Explicit type hint
+        merged_node_groups: list[list[Node]] = [] # Explicit type hint
         merged_token_counts: list[int] = []      # Explicit type hint
         pos = 0
         while pos < len(node_groups):

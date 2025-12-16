@@ -1,7 +1,8 @@
 """Custom base types for Chonkie."""
 
+from collections.abc import Iterator
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Iterator, Optional, Union
+from typing import TYPE_CHECKING, Union
 from uuid import uuid4
 
 if TYPE_CHECKING:
@@ -33,7 +34,7 @@ class Chunk:
     start_index: int = field(default=0)
     end_index: int = field(default=0)
     token_count: int = field(default=0)
-    context: Optional[str] = field(default=None)
+    context: str | None = field(default=None)
     embedding: Union[list[float], "np.ndarray", None] = field(default=None)
 
     def __len__(self) -> int:

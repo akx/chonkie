@@ -1,7 +1,6 @@
 """Test suite for CatsuEmbeddings."""
 
 import os
-from typing import List
 from unittest.mock import MagicMock, patch
 
 import numpy as np
@@ -56,7 +55,7 @@ def sample_text() -> str:
 
 
 @pytest.fixture
-def sample_texts() -> List[str]:
+def sample_texts() -> list[str]:
     """Fixture to create a list of sample texts for testing."""
     return [
         "This is the first sample text.",
@@ -148,7 +147,7 @@ def test_embed_single_text(embedding_model: CatsuEmbeddings, sample_text: str) -
     not CATSU_AVAILABLE,
     reason="Skipping test because Catsu is not installed",
 )
-def test_embed_batch_texts(embedding_model: CatsuEmbeddings, sample_texts: List[str]) -> None:
+def test_embed_batch_texts(embedding_model: CatsuEmbeddings, sample_texts: list[str]) -> None:
     """Test that CatsuEmbeddings correctly embeds a batch of texts."""
     # Mock the client to return correct number of embeddings
     mock_response = MagicMock()
@@ -208,7 +207,7 @@ def test_embed_batch_with_batching(embedding_model: CatsuEmbeddings) -> None:
     not CATSU_AVAILABLE,
     reason="Skipping test because Catsu is not installed",
 )
-def test_embed_batch_fallback_on_error(embedding_model: CatsuEmbeddings, sample_texts: List[str]) -> None:
+def test_embed_batch_fallback_on_error(embedding_model: CatsuEmbeddings, sample_texts: list[str]) -> None:
     """Test that CatsuEmbeddings falls back to individual embeds on batch failure."""
     # Mock batch embed to fail, individual embeds to succeed
     call_count = [0]
@@ -239,7 +238,7 @@ def test_embed_batch_fallback_on_error(embedding_model: CatsuEmbeddings, sample_
     not CATSU_AVAILABLE,
     reason="Skipping test because Catsu is not installed",
 )
-def test_similarity(embedding_model: CatsuEmbeddings, sample_texts: List[str]) -> None:
+def test_similarity(embedding_model: CatsuEmbeddings, sample_texts: list[str]) -> None:
     """Test that CatsuEmbeddings correctly calculates similarity between two embeddings."""
     # Create two embeddings
     emb1 = np.random.rand(1024).astype(np.float32)
@@ -362,7 +361,7 @@ def test_call_method_single_text(embedding_model: CatsuEmbeddings, sample_text: 
     not CATSU_AVAILABLE,
     reason="Skipping test because Catsu is not installed",
 )
-def test_call_method_batch(embedding_model: CatsuEmbeddings, sample_texts: List[str]) -> None:
+def test_call_method_batch(embedding_model: CatsuEmbeddings, sample_texts: list[str]) -> None:
     """Test that CatsuEmbeddings can be called directly with a list of texts."""
     # Mock the client to return correct number of embeddings
     mock_response = MagicMock()

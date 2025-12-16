@@ -4,7 +4,7 @@ import importlib.util as importutil
 import os
 import warnings
 from functools import lru_cache
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
@@ -51,11 +51,11 @@ class OpenAIEmbeddings(BaseEmbeddings):
     def __init__(
         self,
         model: str = DEFAULT_MODEL,
-        tokenizer: Optional[Any] = None,
-        dimension: Optional[int] = None,
-        max_tokens: Optional[int] = None,
-        base_url: Optional[str] = None,
-        api_key: Optional[str] = None,
+        tokenizer: Any | None = None,
+        dimension: int | None = None,
+        max_tokens: int | None = None,
+        base_url: str | None = None,
+        api_key: str | None = None,
         max_retries: int = 3,
         timeout: float = 60.0,
         batch_size: int = 128,
