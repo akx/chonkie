@@ -49,9 +49,9 @@ class EmbeddingsRefinery(BaseRefinery):
 
         """
         # Define the payload for the request
-        if any(type(chunk) != type(chunks[0]) for chunk in chunks):
-            raise ValueError("All chunks must be of the same type.")
         og_type = type(chunks[0])
+        if any(type(chunk) is not og_type for chunk in chunks):
+            raise ValueError("All chunks must be of the same type.")
         payload = {
             "chunks": [chunk.to_dict() for chunk in chunks],
             "embedding_model": self.embedding_model,

@@ -17,8 +17,6 @@ from chonkie.utils import Hubbie
 
 from .base import BaseChunker
 
-logger = get_logger(__name__)
-
 # Import the unified split function
 try:
     from .c_extensions.split import split_text
@@ -33,6 +31,8 @@ from .c_extensions.savgol import (
     find_local_minima_interpolated,
     windowed_cross_similarity,
 )
+
+logger = get_logger(__name__)
 
 
 @chunker("semantic")

@@ -61,7 +61,7 @@ def test_sentence_chunker_initialization(tokenizer: Tokenizer) -> None:
     assert chunker.chunk_size == 512
     assert chunker.chunk_overlap == 128
     assert chunker.min_sentences_per_chunk == 1
-    assert chunker.approximate == False
+    assert not chunker.approximate
     assert chunker.delim == [".", "!", "?", "\n"]
     assert chunker.include_delim == "prev"
 

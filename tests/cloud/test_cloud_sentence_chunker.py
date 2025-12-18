@@ -124,7 +124,7 @@ def test_cloud_sentence_chunker_initialization(mock_requests_get) -> None:
     assert chunker.chunk_overlap == 0
     assert chunker.min_sentences_per_chunk == 1
     assert chunker.min_characters_per_sentence == 12
-    assert chunker.approximate == True
+    assert chunker.approximate
     assert chunker.delim == [". ", "! ", "? ", "\n"]
     assert chunker.include_delim == "prev"
 
